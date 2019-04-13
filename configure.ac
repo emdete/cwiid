@@ -32,7 +32,7 @@ AC_ARG_WITH(
 			PYTHON_NAME=$withval
 		;;
 	esac],
-	[REQUIRE_PYTHON=1; PYTHON_NAME=python])
+	[REQUIRE_PYTHON=1; PYTHON_NAME=python2])
 if test $REQUIRE_PYTHON; then
 	AC_CHECK_PROGS([PYTHON],$PYTHON_NAME)
 	if test $REQUIRE_PYTHON -a ! $PYTHON; then
