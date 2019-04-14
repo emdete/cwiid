@@ -55,8 +55,8 @@ make
 sudo make install
 ```
 
-To install global configuration files to the more familiar /etc rather than
-/usr/etc or /usr/local/etc, execute configure with --sysconfdir=/etc.
+To install global configuration files to the more familiar `/etc` rather than
+`/usr/etc` or `/usr/local/etc`, execute `configure` with `--sysconfdir=/etc`.
 
 While CWiid is still in the early development stages, installation directories
 and filenames are changed more often than in a mature, stable package. In order
@@ -64,8 +64,8 @@ to prevent the collection of obselete directories and files, it is recommended
 that you run `make uninstall && make uninstall_config` from your current CWiid
 source directory before installing a new one. Files are currently installed to
 the following directories:
-/usr/local/{bin,etc,lib,lib/cwiid,lib/python2.X/site-packages,share/doc,share/man}.
-Recently, but no longer, used directories include /usr/share/CWiid - this
+`/usr/local/{bin,etc,lib,lib/cwiid,lib/python2.X/site-packages,share/doc,share/man}`.
+Recently, but no longer, used directories include `/usr/share/CWiid` - this
 directory may be deleted.
 
 Many distributions do not have /usr/local/lib in the library search path, and
@@ -79,9 +79,9 @@ to fix this:
 
 I prefer the second method since it keeps local software in the local directory
 where it should be, and it fixes the problem for every package using
-`/usr/local/lib`, not just CWiid. Until someone offers a convincing argument for
-the omission of /usr/local/lib from /etc/ld.so.conf, I consider this to be a
-distribution bug, and method #2 above is the fix.
+`/usr/local/lib`, not just CWiid. Until someone offers a convincing argument
+for the omission of `/usr/local/lib` from `/etc/ld.so.conf`, I consider this to
+be a distribution bug, and method #2 above is the fix.
 
 Please report any compilation errors at http://cwiid.org.
 
@@ -106,7 +106,8 @@ FUTURE IDEAS/IMPROVEMENTS
 The following list is neither complete nor ordered:
 
 - wmcp (copy data between files and wiimotes)
-- Move wiimote communications into a separate daemon (wiimoted) with which applications communicate via sockets (or some other means)
+- Move wiimote communications into a separate daemon (wiimoted) with which
+  applications communicate via sockets (or some other means)
 - wmgui logging
 - Implement speaker
 - gui/control interface to wminput
