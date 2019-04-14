@@ -6,10 +6,10 @@
 #include <cwiid.h>
 
 /* This is a sample program written to demonstrate basic CWiid libwiimote
- * usage, until _actual_ documentation can be written.  It's quick and dirty
+ * usage, until _actual_ documentation can be written. It's quick and dirty
  * has a horrible interface, but it's sparce enough to pick out the important
- * parts easily.  For examples of read and write code, see wmgui.  Speaker
- * support is "experimental" (read: bad) enough to be disabled.  The beginnings
+ * parts easily. For examples of read and write code, see wmgui. Speaker
+ * support is "experimental" (read: bad) enough to be disabled. The beginnings
  * of a speaker output function are in libwiimote source. */
 /* Note: accelerometer (including nunchuk) and IR outputs produce a
  * lot of data - the purpose of this program is demonstration, not good
@@ -17,10 +17,10 @@
 
 cwiid_mesg_callback_t cwiid_callback;
 
-#define toggle_bit(bf,b)	\
-	(bf) = ((bf) & b)		\
-	       ? ((bf) & ~(b))	\
-	       : ((bf) | (b))
+#define toggle_bit(bf,b) \
+	(bf) = ((bf) & b) \
+		? ((bf) & ~(b)) \
+		: ((bf) | (b))
 
 #define MENU \
 	"1: toggle LED 1\n" \
@@ -84,10 +84,11 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Unable to set message callback\n");
 	}
 
-	printf("Note: To demonstrate the new API interfaces, wmdemo no longer "
-	       "enables messages by default.\n"
-	       "Output can be gathered through the new state-based interface (s), "
-	       "or by enabling the messages interface (m).\n");
+	printf(
+		"Note: To demonstrate the new API interfaces, wmdemo no longer "
+		"enables messages by default.\n"
+		"Output can be gathered through the new state-based interface (s), "
+		"or by enabling the messages interface (m).\n");
 
 	/* Menu */
 	printf("%s", MENU);
@@ -200,7 +201,7 @@ void set_led_state(cwiid_wiimote_t *wiimote, unsigned char led_state)
 		fprintf(stderr, "Error setting LEDs \n");
 	}
 }
-	
+
 void set_rpt_mode(cwiid_wiimote_t *wiimote, unsigned char rpt_mode)
 {
 	if (cwiid_set_rpt_mode(wiimote, rpt_mode)) {
@@ -223,7 +224,7 @@ void print_state(struct cwiid_state *state)
 	if (state->rpt_mode & CWIID_RPT_BALANCE) printf(" BALANCE");
 	if (state->rpt_mode & CWIID_RPT_MOTIONPLUS) printf(" MOTIONPLUS");
 	printf("\n");
-	
+
 	printf("Active LEDs:");
 	if (state->led & CWIID_LED1_ON) printf(" 1");
 	if (state->led & CWIID_LED2_ON) printf(" 2");
@@ -234,19 +235,20 @@ void print_state(struct cwiid_state *state)
 	printf("Rumble: %s\n", state->rumble ? "On" : "Off");
 
 	printf("Battery: %d%%\n",
-	       (int)(100.0 * state->battery / CWIID_BATTERY_MAX));
+		(int)(100.0 * state->battery / CWIID_BATTERY_MAX));
 
 	printf("Buttons: %X\n", state->buttons);
 
 	printf("Acc: x=%d y=%d z=%d\n", state->acc[CWIID_X], state->acc[CWIID_Y],
-	       state->acc[CWIID_Z]);
+		state->acc[CWIID_Z]);
 
 	printf("IR: ");
 	for (i = 0; i < CWIID_IR_SRC_COUNT; i++) {
 		if (state->ir_src[i].valid) {
 			valid_source = 1;
-			printf("(%d,%d) ", state->ir_src[i].pos[CWIID_X],
-			                   state->ir_src[i].pos[CWIID_Y]);
+			printf("(%d,%d) ",
+			state->ir_src[i].pos[CWIID_X],
+			state->ir_src[i].pos[CWIID_Y]);
 		}
 	}
 	if (!valid_source) {
@@ -262,39 +264,38 @@ void print_state(struct cwiid_state *state)
 		printf("Unknown extension attached\n");
 		break;
 	case CWIID_EXT_NUNCHUK:
-		printf("Nunchuk: btns=%.2X stick=(%d,%d) acc.x=%d acc.y=%d "
-		       "acc.z=%d\n", state->ext.nunchuk.buttons,
-		       state->ext.nunchuk.stick[CWIID_X],
-		       state->ext.nunchuk.stick[CWIID_Y],
-		       state->ext.nunchuk.acc[CWIID_X],
-		       state->ext.nunchuk.acc[CWIID_Y],
-		       state->ext.nunchuk.acc[CWIID_Z]);
+		printf("Nunchuk: btns=%.2X stick=(%d,%d) acc.x=%d acc.y=%d acc.z=%d\n",
+			state->ext.nunchuk.buttons,
+			state->ext.nunchuk.stick[CWIID_X],
+			state->ext.nunchuk.stick[CWIID_Y],
+			state->ext.nunchuk.acc[CWIID_X],
+			state->ext.nunchuk.acc[CWIID_Y],
+			state->ext.nunchuk.acc[CWIID_Z]);
 		break;
 	case CWIID_EXT_CLASSIC:
-		printf("Classic: btns=%.4X l_stick=(%d,%d) r_stick=(%d,%d) "
-		       "l=%d r=%d\n", state->ext.classic.buttons,
-		       state->ext.classic.l_stick[CWIID_X],
-		       state->ext.classic.l_stick[CWIID_Y],
-		       state->ext.classic.r_stick[CWIID_X],
-		       state->ext.classic.r_stick[CWIID_Y],
-		       state->ext.classic.l, state->ext.classic.r);
+		printf("Classic: btns=%.4X l_stick=(%d,%d) r_stick=(%d,%d) l=%d r=%d\n",
+			state->ext.classic.buttons,
+			state->ext.classic.l_stick[CWIID_X],
+			state->ext.classic.l_stick[CWIID_Y],
+			state->ext.classic.r_stick[CWIID_X],
+			state->ext.classic.r_stick[CWIID_Y],
+			state->ext.classic.l, state->ext.classic.r);
 		break;
 	case CWIID_EXT_BALANCE:
-		printf("Balance: right_top=%d right_bottom=%d "
-		       "left_top=%d left_bottom=%d\n",
-		       state->ext.balance.right_top,
-		       state->ext.balance.right_bottom,
-		       state->ext.balance.left_top,
-		       state->ext.balance.left_bottom);
+		printf("Balance: right_top=%d right_bottom=%d left_top=%d left_bottom=%d\n",
+			state->ext.balance.right_top,
+			state->ext.balance.right_bottom,
+			state->ext.balance.left_top,
+			state->ext.balance.left_bottom);
 		break;
 	case CWIID_EXT_MOTIONPLUS:
 		printf("MotionPlus: angle_rate=(%d,%d,%d) low_speed=(%d,%d,%d)\n",
-		       state->ext.motionplus.angle_rate[0],
-		       state->ext.motionplus.angle_rate[1],
-		       state->ext.motionplus.angle_rate[2],
-		       state->ext.motionplus.low_speed[0],
-		       state->ext.motionplus.low_speed[1],
-		       state->ext.motionplus.low_speed[2]);
+			state->ext.motionplus.angle_rate[0],
+			state->ext.motionplus.angle_rate[1],
+			state->ext.motionplus.angle_rate[2],
+			state->ext.motionplus.low_speed[0],
+			state->ext.motionplus.low_speed[1],
+			state->ext.motionplus.low_speed[2]);
 		break;
 	}
 }
@@ -303,14 +304,14 @@ void print_state(struct cwiid_state *state)
  * type - this will cause a compile error (rather than some undefined bizarre
  * behavior) if cwiid_callback_t changes */
 /* cwiid_mesg_callback_t has undergone a few changes lately, hopefully this
- * will be the last.  Some programs need to know which messages were received
+ * will be the last. Some programs need to know which messages were received
  * simultaneously (e.g. for correlating accelerometer and IR data), and the
  * sequence number mechanism used previously proved cumbersome, so we just
  * pass an array of messages, all of which were received at the same time.
  * The id is to distinguish between multiple wiimotes using the same callback.
  * */
 void cwiid_callback(cwiid_wiimote_t *wiimote, int mesg_count,
-                    union cwiid_mesg mesg[], struct timespec *timestamp)
+		union cwiid_mesg mesg[], struct timespec *timestamp)
 {
 	int i, j;
 	int valid_source;
@@ -322,7 +323,7 @@ void cwiid_callback(cwiid_wiimote_t *wiimote, int mesg_count,
 		switch (mesg[i].type) {
 		case CWIID_MESG_STATUS:
 			printf("Status Report: battery=%d extension=",
-			       mesg[i].status_mesg.battery);
+				mesg[i].status_mesg.battery);
 			switch (mesg[i].status_mesg.ext_type) {
 			case CWIID_EXT_NONE:
 				printf("none");
@@ -350,9 +351,9 @@ void cwiid_callback(cwiid_wiimote_t *wiimote, int mesg_count,
 			break;
 		case CWIID_MESG_ACC:
 			printf("Acc Report: x=%d, y=%d, z=%d\n",
-                   mesg[i].acc_mesg.acc[CWIID_X],
-			       mesg[i].acc_mesg.acc[CWIID_Y],
-			       mesg[i].acc_mesg.acc[CWIID_Z]);
+				mesg[i].acc_mesg.acc[CWIID_X],
+				mesg[i].acc_mesg.acc[CWIID_Y],
+				mesg[i].acc_mesg.acc[CWIID_Z]);
 			break;
 		case CWIID_MESG_IR:
 			printf("IR Report: ");
@@ -360,8 +361,9 @@ void cwiid_callback(cwiid_wiimote_t *wiimote, int mesg_count,
 			for (j = 0; j < CWIID_IR_SRC_COUNT; j++) {
 				if (mesg[i].ir_mesg.src[j].valid) {
 					valid_source = 1;
-					printf("(%d,%d) ", mesg[i].ir_mesg.src[j].pos[CWIID_X],
-					                   mesg[i].ir_mesg.src[j].pos[CWIID_Y]);
+					printf("(%d,%d) ",
+						mesg[i].ir_mesg.src[j].pos[CWIID_X],
+						mesg[i].ir_mesg.src[j].pos[CWIID_Y]);
 				}
 			}
 			if (!valid_source) {
@@ -370,39 +372,38 @@ void cwiid_callback(cwiid_wiimote_t *wiimote, int mesg_count,
 			printf("\n");
 			break;
 		case CWIID_MESG_NUNCHUK:
-			printf("Nunchuk Report: btns=%.2X stick=(%d,%d) acc.x=%d acc.y=%d "
-			       "acc.z=%d\n", mesg[i].nunchuk_mesg.buttons,
-			       mesg[i].nunchuk_mesg.stick[CWIID_X],
-			       mesg[i].nunchuk_mesg.stick[CWIID_Y],
-			       mesg[i].nunchuk_mesg.acc[CWIID_X],
-			       mesg[i].nunchuk_mesg.acc[CWIID_Y],
-			       mesg[i].nunchuk_mesg.acc[CWIID_Z]);
+			printf("Nunchuk Report: btns=%.2X stick=(%d,%d) acc.x=%d acc.y=%d acc.z=%d\n",
+				mesg[i].nunchuk_mesg.buttons,
+				mesg[i].nunchuk_mesg.stick[CWIID_X],
+				mesg[i].nunchuk_mesg.stick[CWIID_Y],
+				mesg[i].nunchuk_mesg.acc[CWIID_X],
+				mesg[i].nunchuk_mesg.acc[CWIID_Y],
+				mesg[i].nunchuk_mesg.acc[CWIID_Z]);
 			break;
 		case CWIID_MESG_CLASSIC:
-			printf("Classic Report: btns=%.4X l_stick=(%d,%d) r_stick=(%d,%d) "
-			       "l=%d r=%d\n", mesg[i].classic_mesg.buttons,
-			       mesg[i].classic_mesg.l_stick[CWIID_X],
-			       mesg[i].classic_mesg.l_stick[CWIID_Y],
-			       mesg[i].classic_mesg.r_stick[CWIID_X],
-			       mesg[i].classic_mesg.r_stick[CWIID_Y],
-			       mesg[i].classic_mesg.l, mesg[i].classic_mesg.r);
+			printf("Classic Report: btns=%.4X l_stick=(%d,%d) r_stick=(%d,%d) l=%d r=%d\n",
+				mesg[i].classic_mesg.buttons,
+				mesg[i].classic_mesg.l_stick[CWIID_X],
+				mesg[i].classic_mesg.l_stick[CWIID_Y],
+				mesg[i].classic_mesg.r_stick[CWIID_X],
+				mesg[i].classic_mesg.r_stick[CWIID_Y],
+				mesg[i].classic_mesg.l, mesg[i].classic_mesg.r);
 			break;
 		case CWIID_MESG_BALANCE:
-			printf("Balance Report: right_top=%d right_bottom=%d "
-			       "left_top=%d left_bottom=%d\n",
-			       mesg[i].balance_mesg.right_top,
-			       mesg[i].balance_mesg.right_bottom,
-			       mesg[i].balance_mesg.left_top,
-			       mesg[i].balance_mesg.left_bottom);
+			printf("Balance Report: right_top=%d right_bottom=%d left_top=%d left_bottom=%d\n",
+				mesg[i].balance_mesg.right_top,
+				mesg[i].balance_mesg.right_bottom,
+				mesg[i].balance_mesg.left_top,
+				mesg[i].balance_mesg.left_bottom);
 			break;
 		case CWIID_MESG_MOTIONPLUS:
 			printf("MotionPlus Report: angle_rate=(%d,%d,%d) low_speed=(%d,%d,%d)\n",
-			       mesg[i].motionplus_mesg.angle_rate[0],
-			       mesg[i].motionplus_mesg.angle_rate[1],
-			       mesg[i].motionplus_mesg.angle_rate[2],
-			       mesg[i].motionplus_mesg.low_speed[0],
-			       mesg[i].motionplus_mesg.low_speed[1],
-			       mesg[i].motionplus_mesg.low_speed[2]);
+				mesg[i].motionplus_mesg.angle_rate[0],
+				mesg[i].motionplus_mesg.angle_rate[1],
+				mesg[i].motionplus_mesg.angle_rate[2],
+				mesg[i].motionplus_mesg.low_speed[0],
+				mesg[i].motionplus_mesg.low_speed[1],
+				mesg[i].motionplus_mesg.low_speed[2]);
 			break;
 		case CWIID_MESG_ERROR:
 			if (cwiid_close(wiimote)) {
