@@ -108,13 +108,13 @@ brackets):
 # <text>
 ```
 
-	Comment
+Comment
 
 ```
 include <inc_file>
 ```
 
-	Include the file specified by inc_file.
+Include the file specified by `inc_file`.
 
 ```
 Wiimote.<button> = <button_symbol>
@@ -123,11 +123,11 @@ Classic.<button> = <button_symbol>
 Plugin.<plugin>.<button> = <button_symbol>
 ```
 
-	Map the button or key symbol specified on the right-hand side to the button
-	event specified on the left-hand side. Button and key symbols are listed in
-	/usr/include/linux/input.h (BTN_* and KEY_* macros), and in
-	cwiid/wminput/action_enum.txt. All valid wiimote, nunchuk, and classic
-	buttons are listed in cwiid/doc/wminput.list.
+Map the button or key symbol specified on the right-hand side to the button
+event specified on the left-hand side. Button and key symbols are listed in
+`/usr/include/linux/input.h` (`BTN_*` and `KEY_*` macros), and in
+`cwiid/wminput/action_enum.txt`. All valid wiimote, nunchuk, and classic
+buttons are listed in cwiid/doc/wminput.list.
 
 ```
 Wiimote.<axis> = [-][~]<abs_axis_symbol> | [-]<rel_axis_symbol>
@@ -136,26 +136,26 @@ Classic.<axis> = [-][~]<abs_axis_symbol> | [-]<rel_axis_symbol>
 Plugin.<plugin>.<axis> = [-][~]<abs_axis_symbol> | [-]<rel_axis_symbol>
 ```
 
-	Map the axis symbol specified on the right-hand side to the axis event
-	specified on the left-hand side. Axis symbols are listed in
-	/usr/include/linux/input.h (ABS_* and REL_* macros), and in
-	cwiid/wminput/action_enum.txt. All valid wiimote, nunchuk, and classic axes
-	are listed in cwiid/doc/wminput.list. A - before the axis symbol inverts
-	the axis. A ~ is usually required before an absolute axis symbol in order
-	to use it for cursor movement.
+Map the axis symbol specified on the right-hand side to the axis event
+specified on the left-hand side. Axis symbols are listed in
+`/usr/include/linux/input.h` (`ABS_*` and `REL_*` macros), and in
+`cwiid/wminput/action_enum.txt`. All valid wiimote, nunchuk, and classic axes
+are listed in cwiid/doc/wminput.list. A `-` before the axis symbol inverts
+the axis. A `~` is usually required before an absolute axis symbol in order
+to use it for cursor movement.
 
 ```
 Plugin.<plugin>.<param> = <int> | <float>
 ```
 
-	Set the value of a plugin parameter. Ints are silently cast to floats, and
-	floats are cast to ints with a warning.
+Set the value of a plugin parameter. Ints are silently cast to floats, and
+floats are cast to ints with a warning.
 
 ```
 Wiimote.Rumble = On | Off
 ```
 
-	Activates or deactivates force feedback/rumble function.
+Activates or deactivates force feedback/rumble function.
 
 An event device is always created. A mouse device is created if `REL_X`, `REL_Y`,
 and `BTN_LEFT` symbols are mapped (`~ABS_X` and `~ABS_Y` effectively map `REL_X` and
